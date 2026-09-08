@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "synthetic-orders-acceptance-v1",
+  "tenant": "synthetic-bank",
+  "application": "synthetic-orders-postgresql",
+  "workload_sha256": "fbf67e4a9808f15279372d34689a418d726fd43ffce5b7edb1e7e696c3a9b45c",
+  "workload_description": "synthetic-orders-v1: three orders with ids 1,2,3 and amounts 10,20,30; write probe inserts id 4 amount 40",
+  "timing_boundary": "source_stopped_to_application_transaction_verified",
+  "required_checks": [
+    "restored_records",
+    "committed_write"
+  ],
+  "dependencies": [
+    "postgresql",
+    "http_api"
+  ],
+  "cleanup_required": true,
+  "rto_seconds": 60,
+  "rpo_seconds": 300
+}

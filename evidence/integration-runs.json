@@ -1,0 +1,68 @@
+[
+  {
+    "schema_version": 1,
+    "run_id": "candidate-local-1",
+    "case_id": "healthy-orders",
+    "tenant": "synthetic-bank",
+    "workflow": "candidate",
+    "manifest_sha256": "a32168588e54152429350630ed4ec90bb2d994a3cb5ca6e2a6088d1830fbdb87",
+    "workload_sha256": "fbf67e4a9808f15279372d34689a418d726fd43ffce5b7edb1e7e696c3a9b45c",
+    "adapter": "a2z-local-postgres-report/1",
+    "timing_boundary": "source_stopped_to_application_transaction_verified",
+    "active_minutes": null,
+    "report_sha256": "7596df395f99e58fc6e6d83c5638b32e3c5a563f7bc0f5ab570226ed3b89c011",
+    "report": {
+      "schema_version": 1,
+      "scenario": "healthy",
+      "status": "exercise_passed_pending_human_review",
+      "synthetic": true,
+      "rto_objective_seconds": 60,
+      "rpo_objective_seconds": 300,
+      "human_acceptance": "pending",
+      "events": [
+        {
+          "event": "backup_created",
+          "at": "2026-09-08T03:46:28.363075+00:00",
+          "sha256": "11968dda2d3ca555b0fa12fa31110c4699ab6d6184735c7c2a60fa2faec1c22f"
+        },
+        {
+          "event": "recovery_started",
+          "at": "2026-09-08T03:46:28.469775+00:00"
+        },
+        {
+          "event": "restore_completed",
+          "at": "2026-09-08T03:46:29.594136+00:00"
+        },
+        {
+          "event": "application_validated",
+          "at": "2026-09-08T03:46:29.736329+00:00"
+        },
+        {
+          "event": "cleanup_checked",
+          "at": "2026-09-08T03:46:30.436586+00:00",
+          "verified": true
+        }
+      ],
+      "scope": "One local PostgreSQL application; not production or malware-free recovery assurance.",
+      "postgres_version": "postgres (PostgreSQL) 14.15 (Homebrew)",
+      "backup_sha256": "11968dda2d3ca555b0fa12fa31110c4699ab6d6184735c7c2a60fa2faec1c22f",
+      "expected": {
+        "count": 3,
+        "total": 60,
+        "latest": 1788839188.293413
+      },
+      "restored_artifact_sha256": "11968dda2d3ca555b0fa12fa31110c4699ab6d6184735c7c2a60fa2faec1c22f",
+      "measured_data_age_seconds": 0.17635393142700195,
+      "application_checks": {
+        "restored_records": true,
+        "committed_write": true
+      },
+      "recovery_seconds": 1.2665920001454651,
+      "effective_rto_seconds": 60,
+      "cleanup": {
+        "verified": true,
+        "errors": []
+      }
+    }
+  }
+]

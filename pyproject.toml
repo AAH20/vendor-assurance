@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 [project]
 name = "a2z-vendor-assurance"
-version = "0.4.0"
+version = "0.5.0"
 description = "Evidence-linked vendor risk assessment and human-reviewed renewal briefs"
 requires-python = ">=3.12"
 license = "Apache-2.0"

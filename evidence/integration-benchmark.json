@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "manifest_sha256": "a32168588e54152429350630ed4ec90bb2d994a3cb5ca6e2a6088d1830fbdb87",
+  "runs": [
+    {
+      "run_id": "candidate-local-1",
+      "case_id": "healthy-orders",
+      "workflow": "candidate",
+      "scenario": "healthy",
+      "eligible": true,
+      "reasons": [],
+      "active_minutes": null,
+      "human_acceptance": "not_established"
+    }
+  ],
+  "pairs": [],
+  "paired_cases": 0,
+  "unmatched_cases": [
+    "healthy-orders"
+  ],
+  "effort_measured_pairs": 0,
+  "baseline_active_minutes": null,
+  "candidate_active_minutes": null,
+  "active_effort_reduction_fraction": null,
+  "quality_disagreements": [],
+  "commercial_validation": "not_established",
+  "independent_accuracy": "not_measured",
+  "limitations": [
+    "Synthetic/operator-supplied records only; metadata equality does not prove comparable execution conditions.",
+    "Elapsed recovery duration is not active labor. Missing labor measurements remain null.",
+    "No ground-truth labels, confidence intervals, customer acceptance or paid demand established."
+  ]
+}

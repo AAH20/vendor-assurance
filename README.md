@@ -69,6 +69,16 @@ python -m vendor_assurance.managed_demo --output output/managed-demo
 
 See [setup, authorization and operating limits](docs/managed-pilot.md) and the [paid-pilot worksheet](docs/paid-pilot-worksheet.md). This is not a production service or a paid customer deployment.
 
+## Integration and benchmark kit
+
+Run the local PostgreSQL adapter against a versioned acceptance manifest and produce a fair comparison package:
+
+```sh
+python -m vendor_assurance.integration --manifest examples/acceptance-manifest.json --output output/integration
+```
+
+The demonstration has no baseline and makes no savings claim. [The comparison protocol](docs/integration-benchmark.md) documents pairing, exclusions, evidence validation and the external-adapter decision gate. No external recovery vendor is integrated yet.
+
 ## Design and validation
 
 - [Architecture and production gates](docs/architecture.md)
