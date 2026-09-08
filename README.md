@@ -91,6 +91,7 @@ See [authorization, setup, evidence interpretation and limits](docs/aws-backup-a
 
 ## Design and validation
 
+- [Application recovery assurance pilot: scope, qualification and KPIs](docs/recovery-assurance-pilot.md)
 - [Architecture and production gates](docs/architecture.md)
 - [Evaluation, KPIs and bounded evolution](docs/evaluation.md)
 - [Market hypothesis, alternatives and paid validation](docs/market.md)
