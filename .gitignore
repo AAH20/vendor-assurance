@@ -5,3 +5,5 @@ build/
 dist/
 output/
 .env*
+*.token
+control.db*

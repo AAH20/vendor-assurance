@@ -18,25 +18,29 @@ from urllib.error import HTTPError
 SCENARIOS = ('healthy', 'corrupt_backup', 'missing_dependency', 'stale_data', 'invalid_application', 'rto_exceeded')
 
 
-def run(output, scenario='healthy', rto_seconds=60, rpo_seconds=300):
+def run(output, scenario='healthy', rto_seconds=60, rpo_seconds=300, control_check=None):
     if scenario not in SCENARIOS or not all(math.isfinite(x) and x > 0 for x in (rto_seconds,rpo_seconds)):
         raise ValueError('invalid scenario or recovery objectives')
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     # Ignore ambient PG* settings; this drill must never target a configured service.
     env = {k:v for k,v in os.environ.items() if not k.startswith('PG')}
-    bindir = Path(subprocess.check_output(['pg_config','--bindir'],env=env,text=True).strip())
+    bindir = Path(subprocess.check_output(['pg_config','--bindir'],env=env,text=True,timeout=10).strip())
     workspace = Path(tempfile.mkdtemp(prefix='a2zr-', dir='/tmp'))
     os.chmod(workspace, 0o700)
     started = []
     server = None
     server_thread = None
     events = []
+    cleaning = False
     report = dict(schema_version=1, scenario=scenario, status='failed', synthetic=True,
                   rto_objective_seconds=rto_seconds, rpo_objective_seconds=rpo_seconds,
                   human_acceptance='pending', events=events,
                   scope='One local PostgreSQL application; not production or malware-free recovery assurance.')
     def command(tool, *args, timeout=30):
+        if control_check and not cleaning:
+            control_check()
+            timeout = min(timeout, 5)
         result = subprocess.run([str(bindir/tool), *map(str,args)],env=env,text=True,capture_output=True,timeout=timeout)
         if result.returncode:
             raise RuntimeError(f'{tool} failed: {result.stderr[-1200:]}')
@@ -149,6 +153,7 @@ def run(output, scenario='healthy', rto_seconds=60, rpo_seconds=300):
             exc.close()
         event('exercise_failed', reason=report['failure'])
     finally:
+        cleaning = True
         if recovery_started and 'recovery_seconds' not in report:
             report['elapsed_to_failure_seconds'] = time.monotonic()-recovery_started
         cleanup_errors = []

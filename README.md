@@ -59,6 +59,16 @@ A2Z_RECOVERY_INTEGRATION=1 python -m unittest discover -s tests -v
 
 Requires PostgreSQL server/client tools. Integration tests are explicitly opt-in locally and run in a separate GitHub CI job.
 
+## Authenticated managed pilot foundation
+
+A loopback control service authenticates separate requester, approver, runner and reviewer credentials, enforces scoped job transitions, and binds review to exact execution evidence. The full demo runs a real synthetic recovery; its reviewer is simulated.
+
+```sh
+python -m vendor_assurance.managed_demo --output output/managed-demo
+```
+
+See [setup, authorization and operating limits](docs/managed-pilot.md) and the [paid-pilot worksheet](docs/paid-pilot-worksheet.md). This is not a production service or a paid customer deployment.
+
 ## Design and validation
 
 - [Architecture and production gates](docs/architecture.md)

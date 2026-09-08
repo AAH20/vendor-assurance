@@ -50,3 +50,15 @@ class RecoveryIntegrationTests(unittest.TestCase):
         report=self.exercise('rto_exceeded')
         self.assertEqual(report['status'],'failed')
         self.assertIn('recovery time',report['failure'])
+
+    def test_control_revocation_stops_and_cleans(self):
+        calls=0
+        def guard():
+            nonlocal calls
+            calls+=1
+            if calls>=4: raise PermissionError('authorization revoked')
+        with tempfile.TemporaryDirectory() as temporary:
+            report=run(Path(temporary)/'evidence',control_check=guard)
+            self.assertEqual(report['status'],'failed')
+            self.assertIn('revoked',report['failure'])
+            self.assertTrue(report['cleanup']['verified'])

@@ -1,0 +1,85 @@
+{
+  "synthetic": true,
+  "review_simulated": true,
+  "denied_actions": [
+    "requester:approve",
+    "runner:claim",
+    "runner:accept"
+  ],
+  "job": {
+    "id": "ec102cb5-16b7-43cf-bbba-3fc06b4f3e14",
+    "tenant": "synthetic-bank",
+    "status": "accepted",
+    "adapter": "local-postgres-synthetic-v1",
+    "created_by": "requester-demo",
+    "created_at": 1788836649.542596,
+    "expires_at": 1788837549.542596,
+    "max_runtime_seconds": 120,
+    "max_concurrent_clusters": 2,
+    "cloud_spend_permitted": false,
+    "rto_seconds": 60,
+    "rpo_seconds": 300,
+    "approved_by": "approver-demo",
+    "approved_at": 1788836649.546325,
+    "runner": "runner-demo",
+    "started_at": 1788836649.54719,
+    "result": {
+      "schema_version": 1,
+      "scenario": "healthy",
+      "status": "exercise_passed_pending_human_review",
+      "synthetic": true,
+      "rto_objective_seconds": 60,
+      "rpo_objective_seconds": 300,
+      "human_acceptance": "pending",
+      "events": [
+        {
+          "event": "backup_created",
+          "at": "2026-09-08T03:04:10.496777+00:00",
+          "sha256": "86b8b82cec3d4a8678d573f79f5a2624ea5d7f0fbf2d411e4e219a4ddbe28963"
+        },
+        {
+          "event": "recovery_started",
+          "at": "2026-09-08T03:04:10.606487+00:00"
+        },
+        {
+          "event": "restore_completed",
+          "at": "2026-09-08T03:04:11.232225+00:00"
+        },
+        {
+          "event": "application_validated",
+          "at": "2026-09-08T03:04:11.272323+00:00"
+        },
+        {
+          "event": "cleanup_checked",
+          "at": "2026-09-08T03:04:11.980146+00:00",
+          "verified": true
+        }
+      ],
+      "scope": "One local PostgreSQL application; not production or malware-free recovery assurance.",
+      "postgres_version": "postgres (PostgreSQL) 14.15 (Homebrew)",
+      "backup_sha256": "86b8b82cec3d4a8678d573f79f5a2624ea5d7f0fbf2d411e4e219a4ddbe28963",
+      "expected": {
+        "count": 3,
+        "total": 60,
+        "latest": 1788836650.422585
+      },
+      "restored_artifact_sha256": "86b8b82cec3d4a8678d573f79f5a2624ea5d7f0fbf2d411e4e219a4ddbe28963",
+      "measured_data_age_seconds": 0.1838979721069336,
+      "application_checks": {
+        "restored_records": true,
+        "committed_write": true
+      },
+      "recovery_seconds": 0.6658269576728344,
+      "effective_rto_seconds": 60,
+      "cleanup": {
+        "verified": true,
+        "errors": []
+      }
+    },
+    "result_sha256": "f5f406745784e62cc44a43d1040e80a9e90ade22941b35cb36d5ee8be7c79a44",
+    "finished_at": 1788836651.981243,
+    "reviewed_by": "reviewer-demo",
+    "reviewed_at": 1788836651.983273,
+    "rationale": "SIMULATED reviewer: real human acceptance is still required for a pilot."
+  }
+}
