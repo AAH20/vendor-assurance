@@ -1,0 +1,13 @@
+{
+  "actor": "Synthetic reviewer",
+  "role": "human_reviewer",
+  "outcome": "defer",
+  "rationale": "Resolve conflicting recovery objectives and refresh backup evidence before renewal.",
+  "acknowledgements": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5"
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "tenant": "synthetic-bank",
+  "vendor": "Example Cloud",
+  "service": "Core payments support",
+  "renewal_date": "2026-10-01",
+  "documents": [
+    {
+      "id": "contract-v1",
+      "family": "contract",
+      "version": 1,
+      "kind": "contract",
+      "text": "Recovery objective: 4 hours.",
+      "valid_until": "2027-01-01"
+    },
+    {
+      "id": "response-v1",
+      "family": "response",
+      "version": 1,
+      "kind": "questionnaire",
+      "text": "Recovery objective: 1 hour.",
+      "valid_until": "2027-01-01"
+    },
+    {
+      "id": "backup-v1",
+      "family": "backup",
+      "version": 1,
+      "kind": "evidence",
+      "text": "Backup testing: passed.",
+      "valid_until": "2026-08-01"
+    },
+    {
+      "id": "audit-v1",
+      "family": "audit",
+      "version": 1,
+      "kind": "evidence",
+      "text": "Audit scope: all services.",
+      "valid_until": "2027-01-01"
+    },
+    {
+      "id": "audit-v2",
+      "family": "audit",
+      "version": 2,
+      "kind": "evidence",
+      "text": "Audit scope: core service only.",
+      "valid_until": "2027-01-01"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "key": "recovery",
+      "value": "4 hours",
+      "document": "contract-v1",
+      "start": 0,
+      "end": 28,
+      "quote": "Recovery objective: 4 hours."
+    },
+    {
+      "id": "C2",
+      "key": "recovery",
+      "value": "1 hour",
+      "document": "response-v1",
+      "start": 0,
+      "end": 27,
+      "quote": "Recovery objective: 1 hour."
+    },
+    {
+      "id": "C3",
+      "key": "backup",
+      "value": "passed",
+      "document": "backup-v1",
+      "start": 0,
+      "end": 23,
+      "quote": "Backup testing: passed."
+    },
+    {
+      "id": "C4",
+      "key": "audit",
+      "value": "all services",
+      "document": "audit-v1",
+      "start": 0,
+      "end": 26,
+      "quote": "Audit scope: all services."
+    },
+    {
+      "id": "C5",
+      "key": "audit",
+      "value": "core service only",
+      "document": "audit-v2",
+      "start": 0,
+      "end": 31,
+      "quote": "Audit scope: core service only."
+    }
+  ],
+  "obligations": [
+    {
+      "key": "backup",
+      "owner": "Risk lead"
+    }
+  ],
+  "actions": [
+    {
+      "id": "A1",
+      "owner": "Supplier manager",
+      "due": "2026-09-01",
+      "status": "open"
+    }
+  ]
+}
