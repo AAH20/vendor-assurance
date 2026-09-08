@@ -46,7 +46,18 @@ python -m vendor_assurance.remediation examples/remediation.json \
   --decision examples/closure-reviewer.json --output output/closure
 ```
 
-The combined suite contains 46 regression tests. See the [evidence contract and limits](docs/remediation.md) and [design-partner pilot package](docs/design-partner-pilot.md). No design partners have been recruited by this repository.
+The assurance and remediation suites contain 46 regression tests. See the [evidence contract and limits](docs/remediation.md) and [design-partner pilot package](docs/design-partner-pilot.md). No design partners have been recruited by this repository.
+
+## Executable recovery exercise
+
+A real PostgreSQL backup is restored into a disposable second cluster and verified through a local HTTP application. Synthetic records only; existing databases are never targeted. See [setup, measurement boundaries, failure scenarios and cleanup](docs/recovery.md).
+
+```sh
+python -m vendor_assurance.recovery --output output/recovery
+A2Z_RECOVERY_INTEGRATION=1 python -m unittest discover -s tests -v
+```
+
+Requires PostgreSQL server/client tools. Integration tests are explicitly opt-in locally and run in a separate GitHub CI job.
 
 ## Design and validation
 

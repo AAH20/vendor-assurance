@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "scenario": "healthy",
+  "status": "exercise_passed_pending_human_review",
+  "synthetic": true,
+  "rto_objective_seconds": 60,
+  "rpo_objective_seconds": 300,
+  "human_acceptance": "pending",
+  "events": [
+    {
+      "event": "backup_created",
+      "at": "2026-09-08T02:39:45.778149+00:00",
+      "sha256": "330cb291c02e00e8a0444875184b16725ef75c89d54176d9e09d59606ea7e225"
+    },
+    {
+      "event": "recovery_started",
+      "at": "2026-09-08T02:39:45.882907+00:00"
+    },
+    {
+      "event": "restore_completed",
+      "at": "2026-09-08T02:39:46.955861+00:00"
+    },
+    {
+      "event": "application_validated",
+      "at": "2026-09-08T02:39:47.053777+00:00"
+    },
+    {
+      "event": "cleanup_checked",
+      "at": "2026-09-08T02:39:47.770400+00:00",
+      "verified": true
+    }
+  ],
+  "scope": "One local PostgreSQL application; not production or malware-free recovery assurance.",
+  "postgres_version": "postgres (PostgreSQL) 14.15 (Homebrew)",
+  "backup_sha256": "330cb291c02e00e8a0444875184b16725ef75c89d54176d9e09d59606ea7e225",
+  "expected": {
+    "count": 3,
+    "total": 60,
+    "latest": 1788835185.473209
+  },
+  "restored_artifact_sha256": "330cb291c02e00e8a0444875184b16725ef75c89d54176d9e09d59606ea7e225",
+  "measured_data_age_seconds": 0.40969204902648926,
+  "application_checks": {
+    "restored_records": true,
+    "committed_write": true
+  },
+  "recovery_seconds": 1.170852332841605,
+  "effective_rto_seconds": 60,
+  "cleanup": {
+    "verified": true,
+    "errors": []
+  }
+}
