@@ -36,6 +36,18 @@ This is a trusted-local-operator prototype, **not an authenticated multi-tenant 
 
 No PDF/OCR extraction, model-generated assessments, live monitoring, remediation scheduling, SSO, production authorization, Slack/Discord connection, payment or contract execution is implemented. LangGraph, GraphRAG, Pinecone and due-diligence agent adapters are future integrations gated by evaluation. No CNCF endorsement or deployment is implied. DMs, private-channel ingestion and automated outreach are excluded.
 
+## Remediation assurance extension
+
+Verify closure eligibility from normalized AWS/Prowler-style evidence, approved revision and deployment references, and a fresh explicit passing observation. This is an offline synthetic workflow, not a native Prowler or GitHub collector.
+
+```sh
+python -m vendor_assurance.remediation examples/remediation.json \
+  --tenant synthetic-bank --as-of 2026-09-08T13:00:00Z \
+  --decision examples/closure-reviewer.json --output output/closure
+```
+
+The combined suite contains 46 regression tests. See the [evidence contract and limits](docs/remediation.md) and [design-partner pilot package](docs/design-partner-pilot.md). No design partners have been recruited by this repository.
+
 ## Design and validation
 
 - [Architecture and production gates](docs/architecture.md)

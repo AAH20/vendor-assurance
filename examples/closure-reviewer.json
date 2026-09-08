@@ -1,0 +1,5 @@
+{
+  "actor": "Synthetic closure reviewer",
+  "role": "human_closure_reviewer",
+  "rationale": "Reviewed matched resource, approved revision, successful deployment and fresh explicit pass."
+}

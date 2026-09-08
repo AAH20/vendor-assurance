@@ -1,0 +1,88 @@
+{
+  "tenant": "synthetic-bank",
+  "finding": {
+    "id": "F-storage",
+    "owner": "Synthetic cloud owner",
+    "identity": {
+      "provider": "aws",
+      "account": "000000000000",
+      "region": "eu-west-1",
+      "environment": "synthetic",
+      "resource": "arn:aws:s3:::synthetic-example"
+    },
+    "check": "object_storage_public_access",
+    "definition": {
+      "scanner": "prowler",
+      "version": "synthetic-1",
+      "check_id": "synthetic-public-storage",
+      "configuration_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "baseline_observation": "before"
+  },
+  "change": {
+    "id": "PR-1",
+    "repository": "synthetic/repository",
+    "revision": "synthetic-revision-1",
+    "approval": {
+      "actor": "Synthetic approver",
+      "role": "human_change_approver",
+      "decision": "approve",
+      "revision": "synthetic-revision-1",
+      "at": "2026-09-08T10:00:00Z"
+    },
+    "deployment": {
+      "repository": "synthetic/repository",
+      "revision": "synthetic-revision-1",
+      "identity": {
+        "provider": "aws",
+        "account": "000000000000",
+        "region": "eu-west-1",
+        "environment": "synthetic",
+        "resource": "arn:aws:s3:::synthetic-example"
+      },
+      "status": "success",
+      "at": "2026-09-08T11:00:00Z",
+      "run_reference": "synthetic://deployment/1"
+    }
+  },
+  "observations": [
+    {
+      "id": "before",
+      "collected_at": "2026-09-08T09:00:00Z",
+      "status": "fail",
+      "identity": {
+        "provider": "aws",
+        "account": "000000000000",
+        "region": "eu-west-1",
+        "environment": "synthetic",
+        "resource": "arn:aws:s3:::synthetic-example"
+      },
+      "definition": {
+        "scanner": "prowler",
+        "version": "synthetic-1",
+        "check_id": "synthetic-public-storage",
+        "configuration_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "source": "synthetic://fixture/before"
+    },
+    {
+      "id": "after",
+      "collected_at": "2026-09-08T12:00:00Z",
+      "status": "pass",
+      "identity": {
+        "provider": "aws",
+        "account": "000000000000",
+        "region": "eu-west-1",
+        "environment": "synthetic",
+        "resource": "arn:aws:s3:::synthetic-example"
+      },
+      "definition": {
+        "scanner": "prowler",
+        "version": "synthetic-1",
+        "check_id": "synthetic-public-storage",
+        "configuration_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "source": "synthetic://fixture/after"
+    }
+  ]
+}

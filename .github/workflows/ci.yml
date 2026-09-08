@@ -16,3 +16,4 @@ jobs:
       - run: python -m pip install .
       - run: python -m unittest discover -s tests -v
       - run: python -m vendor_assurance examples/synthetic.json --tenant synthetic-bank --as-of 2026-09-08 --decision examples/human-decision.json --output /tmp/vendor-assurance-demo
+      - run: python -m vendor_assurance.remediation examples/remediation.json --tenant synthetic-bank --as-of 2026-09-08T13:00:00Z --decision examples/closure-reviewer.json --output /tmp/remediation-demo
