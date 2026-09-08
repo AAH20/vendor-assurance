@@ -1,0 +1,17 @@
+{
+  "tenant": "synthetic-bank",
+  "restore_job_id": "00000000-0000-0000-0000-000000000001",
+  "created_resource_arn": "arn:aws:rds:eu-west-1:000000000000:db:synthetic-restored",
+  "application_test_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+  "engine": "postgresql",
+  "checks": {
+    "restored_records": true,
+    "committed_write": true
+  },
+  "extra_resources_removed": true,
+  "evidence_reference": "synthetic://application-evidence",
+  "reviewer": "Synthetic reviewer",
+  "validation_started_at": "2026-09-08T10:10:00Z",
+  "validation_completed_at": "2026-09-08T10:12:00Z",
+  "latest_recovered_transaction_at": "2026-09-08T09:59:00Z"
+}

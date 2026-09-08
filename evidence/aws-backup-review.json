@@ -1,0 +1,83 @@
+{
+  "grant": {
+    "schema_version": 1,
+    "mode": "synthetic",
+    "tenant": "synthetic-bank",
+    "purpose": "read_restore_evidence",
+    "revoked": false,
+    "not_before": "2026-09-08T00:00:00Z",
+    "expires_at": "2026-09-09T00:00:00Z",
+    "account": "000000000000",
+    "region": "eu-west-1",
+    "restore_job_id": "00000000-0000-0000-0000-000000000001",
+    "caller_arn": "arn:aws:sts::000000000000:assumed-role/ReadBackup/demo",
+    "source_resource_arn": "arn:aws:rds:eu-west-1:000000000000:db:synthetic-source",
+    "recovery_point_arn": "arn:aws:rds:eu-west-1:000000000000:snapshot:synthetic-backup",
+    "application_test_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "authorization_reference": "SYNTHETIC-NOT-AUTHORIZATION"
+  },
+  "capture": {
+    "schema_version": 1,
+    "adapter": "aws-backup-describe-restore-job/1",
+    "transport": "synthetic-fixture-not-aws",
+    "tenant": "synthetic-bank",
+    "collected_at": "2026-09-08T11:00:00Z",
+    "grant_sha256": "543d0b9493df8158c2dfd7c64a4b45b2dadd31df23c9a127701e98745a0ab0ee",
+    "response": {
+      "AccountId": "000000000000",
+      "RestoreJobId": "00000000-0000-0000-0000-000000000001",
+      "SourceResourceArn": "arn:aws:rds:eu-west-1:000000000000:db:synthetic-source",
+      "RecoveryPointArn": "arn:aws:rds:eu-west-1:000000000000:snapshot:synthetic-backup",
+      "ResourceType": "RDS",
+      "CreatedResourceArn": "arn:aws:rds:eu-west-1:000000000000:db:synthetic-restored",
+      "Status": "COMPLETED",
+      "ValidationStatus": "SUCCESSFUL",
+      "DeletionStatus": "SUCCESSFUL",
+      "CreationDate": "2026-09-08T10:00:00Z",
+      "CompletionDate": "2026-09-08T10:10:00Z",
+      "RecoveryPointCreationDate": "2026-09-08T09:58:00Z",
+      "IsParent": false
+    },
+    "response_sha256": "63ae928a1eafe29073bac596776f3f5024b342a0146f97188445db85f2e044a4"
+  },
+  "application": {
+    "tenant": "synthetic-bank",
+    "restore_job_id": "00000000-0000-0000-0000-000000000001",
+    "created_resource_arn": "arn:aws:rds:eu-west-1:000000000000:db:synthetic-restored",
+    "application_test_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "engine": "postgresql",
+    "checks": {
+      "restored_records": true,
+      "committed_write": true
+    },
+    "extra_resources_removed": true,
+    "evidence_reference": "synthetic://application-evidence",
+    "reviewer": "Synthetic reviewer",
+    "validation_started_at": "2026-09-08T10:10:00Z",
+    "validation_completed_at": "2026-09-08T10:12:00Z",
+    "latest_recovered_transaction_at": "2026-09-08T09:59:00Z"
+  },
+  "review": {
+    "adapter": "aws-backup-review/1",
+    "tenant": "synthetic-bank",
+    "restore_job_id": "00000000-0000-0000-0000-000000000001",
+    "status": "eligible_for_human_review",
+    "reasons": [],
+    "recovery_seconds": 720.0,
+    "recovered_data_age_seconds": 60.0,
+    "timing_boundary": "aws_restore_job_creation_to_application_validation_complete",
+    "rto_seconds": 3600,
+    "rpo_seconds": 300,
+    "grant_sha256": "543d0b9493df8158c2dfd7c64a4b45b2dadd31df23c9a127701e98745a0ab0ee",
+    "capture_sha256": "ff2c618b937c4292b7bb5ccbd28dc4b81115e8953c62c71ea146574e5ff93d21",
+    "application_sha256": "7ea18574a1090162c8066b760b76f0f9b571b48f9b186589b5940946d50d7d83",
+    "human_acceptance": "pending",
+    "external_action": false,
+    "limitations": [
+      "Export hashes are not signatures or AWS attestation.",
+      "Application checks and cleanup receipt are externally supplied, not executed by this adapter.",
+      "RecoveryPointCreationDate is not used as proof of recovered transaction age.",
+      "Timing excludes outage detection and human mobilization; do not compare directly to the local runner timing boundary."
+    ]
+  }
+}

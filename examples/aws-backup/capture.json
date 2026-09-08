@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "adapter": "aws-backup-describe-restore-job/1",
+  "transport": "synthetic-fixture-not-aws",
+  "tenant": "synthetic-bank",
+  "collected_at": "2026-09-08T11:00:00Z",
+  "grant_sha256": "543d0b9493df8158c2dfd7c64a4b45b2dadd31df23c9a127701e98745a0ab0ee",
+  "response": {
+    "AccountId": "000000000000",
+    "RestoreJobId": "00000000-0000-0000-0000-000000000001",
+    "SourceResourceArn": "arn:aws:rds:eu-west-1:000000000000:db:synthetic-source",
+    "RecoveryPointArn": "arn:aws:rds:eu-west-1:000000000000:snapshot:synthetic-backup",
+    "ResourceType": "RDS",
+    "CreatedResourceArn": "arn:aws:rds:eu-west-1:000000000000:db:synthetic-restored",
+    "Status": "COMPLETED",
+    "ValidationStatus": "SUCCESSFUL",
+    "DeletionStatus": "SUCCESSFUL",
+    "CreationDate": "2026-09-08T10:00:00Z",
+    "CompletionDate": "2026-09-08T10:10:00Z",
+    "RecoveryPointCreationDate": "2026-09-08T09:58:00Z",
+    "IsParent": false
+  },
+  "response_sha256": "63ae928a1eafe29073bac596776f3f5024b342a0146f97188445db85f2e044a4"
+}

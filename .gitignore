@@ -7,3 +7,5 @@ output/
 .env*
 *.token
 control.db*
+.venv-*/
+aws-review.json

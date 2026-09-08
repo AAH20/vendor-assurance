@@ -77,7 +77,17 @@ Run the local PostgreSQL adapter against a versioned acceptance manifest and pro
 python -m vendor_assurance.integration --manifest examples/acceptance-manifest.json --output output/integration
 ```
 
-The demonstration has no baseline and makes no savings claim. [The comparison protocol](docs/integration-benchmark.md) documents pairing, exclusions, evidence validation and the external-adapter decision gate. No external recovery vendor is integrated yet.
+The demonstration has no baseline and makes no savings claim. [The comparison protocol](docs/integration-benchmark.md) documents pairing, exclusions, evidence validation and the external-adapter decision gate. The local execution benchmark has no external-vendor baseline; the separate AWS read-only adapter below does not execute restores.
+
+## Read-only AWS Backup evidence adapter
+
+The official Boto3 adapter reads one authorized RDS restore job and checks its evidence against an application receipt. SDK Stubber tests run without AWS credentials or account access. Live collection has not been validated.
+
+```sh
+python -m vendor_assurance.aws_backup review --grant examples/aws-backup/grant.json --capture examples/aws-backup/capture.json --application examples/aws-backup/application.json --tenant synthetic-bank --as-of 2026-09-08T12:00:00Z --output aws-review.json
+```
+
+See [authorization, setup, evidence interpretation and limits](docs/aws-backup-adapter.md). Restore execution remains absent from this adapter.
 
 ## Design and validation
 
