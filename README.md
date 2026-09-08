@@ -93,6 +93,10 @@ See [authorization, setup, evidence interpretation and limits](docs/aws-backup-a
 
 Run the synthetic PostgreSQL exercise with expiring authorization, code-bound test scope, and an integrity-linked evidence receipt. Human acceptance stays pending. See [setup, evaluation and trust limitations](docs/acceptance-runner.md). Customer RDS execution and authenticated approval are not implemented by this runner.
 
+## Recovery acceptance gateway foundation
+
+The managed service now binds approvals to adapter code and submissions to a single authenticated execution. Concurrent claim replay and credential substitution are rejected; review covers both scope and evidence. See [protocol changes, demonstration and remaining production gaps](docs/recovery-acceptance-gateway.md).
+
 ## Design and validation
 
 - [Application recovery assurance pilot: scope, qualification and KPIs](docs/recovery-assurance-pilot.md)

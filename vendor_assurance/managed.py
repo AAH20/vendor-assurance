@@ -18,6 +18,7 @@ from urllib.error import HTTPError
 import uuid
 from .core import digest
 from .recovery import run
+from .acceptance import package_digest
 
 
 @contextmanager
@@ -68,7 +69,7 @@ def dispatch(root, token, action, body, now=None):
                 raise ValueError('only the fixed synthetic adapter is permitted')
             identifier=str(uuid.uuid4())
             job=dict(id=identifier,tenant=principal['tenant'],status='pending_approval',adapter=body['adapter'],created_by=principal['actor'],created_at=now,
-                     expires_at=now+900,max_runtime_seconds=120,max_concurrent_clusters=2,cloud_spend_permitted=False,rto_seconds=60,rpo_seconds=300)
+                     package_sha256=package_digest(),expires_at=now+900,max_runtime_seconds=120,max_concurrent_clusters=2,cloud_spend_permitted=False,rto_seconds=60,rpo_seconds=300)
             db.execute('INSERT INTO jobs VALUES(?,?,?)',(identifier,principal['tenant'],json.dumps(job)))
         else:
             identifier=body.get('id')
@@ -86,18 +87,23 @@ def dispatch(root, token, action, body, now=None):
                 if job['status']=='revoked': raise PermissionError('job revoked')
                 if action in ('approve','claim','check','submit') and now>=job['expires_at']:
                     raise PermissionError('authorization expired')
+                if action in ('approve','claim','check','submit') and job.get('package_sha256') != package_digest():
+                    raise PermissionError('approved package changed; create a new job')
                 if action=='approve':
                     if job['status']!='pending_approval': raise ValueError('not pending approval')
                     if principal['actor']==job['created_by']: raise PermissionError('separate approver required')
                     job.update(status='approved',approved_by=principal['actor'],approved_at=now)
                 elif action=='claim':
                     if job['status']!='approved': raise ValueError('job already claimed or not approved')
-                    job.update(status='running',runner=principal['actor'],started_at=now)
+                    if principal['actor'] in (job['created_by'],job['approved_by']): raise PermissionError('independent runner required')
+                    job.update(status='running',runner=principal['actor'],runner_credential=principal['token_hash'],execution_id=str(uuid.uuid4()),started_at=now)
                 elif action in ('check','submit'):
-                    if job['status']!='running' or job['runner']!=principal['actor']: raise PermissionError('runner does not own active job')
+                    if job['status']!='running' or job['runner']!=principal['actor'] or job.get('runner_credential')!=principal['token_hash']: raise PermissionError('runner does not own active job')
                     if action=='check':
                         if now-job['started_at']>=job['max_runtime_seconds']: raise PermissionError('runtime budget exhausted')
                         return job
+                    expected_scope={key:job[key] for key in ('id','tenant','execution_id','package_sha256')}
+                    if body.get('execution_scope') != expected_scope: raise ValueError('evidence must bind the claimed execution scope')
                     result=body['result']
                     if not isinstance(result,dict) or result.get('synthetic') is not True:
                         raise ValueError('synthetic report required')
@@ -107,10 +113,12 @@ def dispatch(root, token, action, body, now=None):
                         if type(value) not in (int,float) or not math.isfinite(value) or not 0<=value<=limit: good=False
                     if result.get('scenario')!='healthy': good=False
                     if now-job['started_at']>=job['max_runtime_seconds']: good=False
-                    job.update(status='awaiting_review' if good else 'failed',result=result,result_sha256=digest(result),finished_at=now)
+                    envelope={'execution_scope':expected_scope,'report':result}
+                    job.update(status='awaiting_review' if good else 'failed',result=result,result_sha256=digest(envelope),evidence=envelope,finished_at=now)
                 elif action in ('accept','reject'):
                     if job['status']!='awaiting_review': raise ValueError('successful evidence required for review')
                     if principal['actor'] in (job['runner'],job['approved_by'],job['created_by']): raise PermissionError('independent reviewer required')
+                    if digest(job['evidence'])!=job['result_sha256'] or job['evidence']['report']!=job['result']: raise ValueError('stored evidence integrity mismatch')
                     if body.get('result_sha256')!=job['result_sha256']: raise ValueError('review must bind exact evidence')
                     rationale=body.get('rationale')
                     if not isinstance(rationale,str) or not rationale.strip(): raise ValueError('review rationale required')
@@ -183,9 +191,10 @@ def main():
     if args.action=='execute':
         if not args.output or args.output.exists(): raise ValueError('new output directory required')
         job=request(args.port,token,'claim',{'id':args.id})
+        if job['package_sha256'] != package_digest(): raise ValueError('local package does not match approval')
         def guard(): request(args.port,token,'check',{'id':args.id})
         result=run(args.output,control_check=guard,rto_seconds=job['rto_seconds'],rpo_seconds=job['rpo_seconds'])
-        result=request(args.port,token,'submit',{'id':args.id,'result':result})
+        result=request(args.port,token,'submit',{'id':args.id,'result':result,'execution_scope':{k:job[k] for k in ('id','tenant','execution_id','package_sha256')}})
     else:
         body={'adapter':'local-postgres-synthetic-v1'} if args.action=='create' else {'id':args.id}
         if args.action in ('accept','reject'): body.update(rationale=args.rationale,result_sha256=args.result_sha256)
