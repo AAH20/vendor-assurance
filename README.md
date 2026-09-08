@@ -89,6 +89,10 @@ python -m vendor_assurance.aws_backup review --grant examples/aws-backup/grant.j
 
 See [authorization, setup, evidence interpretation and limits](docs/aws-backup-adapter.md). Restore execution remains absent from this adapter.
 
+## Application recovery acceptance runner
+
+Run the synthetic PostgreSQL exercise with expiring authorization, code-bound test scope, and an integrity-linked evidence receipt. Human acceptance stays pending. See [setup, evaluation and trust limitations](docs/acceptance-runner.md). Customer RDS execution and authenticated approval are not implemented by this runner.
+
 ## Design and validation
 
 - [Application recovery assurance pilot: scope, qualification and KPIs](docs/recovery-assurance-pilot.md)
